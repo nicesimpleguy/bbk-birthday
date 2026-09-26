@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Kate's Birthday Adventure</title>
+
+<style>
+:root{
+    --pink1:#ffd6ea;
+    --pink2:#ffb6d9;
+    --pink3:#ff8fc7;
+    --purple:#b84d9c;
+    --text:#5a2b4a;
+    --glass:rgba(255,255,255,.75);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    background:linear-gradient(135deg,var(--pink1),var(--pink2));
+    min-height:100vh;
+    overflow-x:hidden;
+    color:var(--text);
+}
+
+/* Floating decorations */
+
+.hearts{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+}
+
+.heart{
+    position:absolute;
+    font-size:24px;
+    animation:float 12s linear infinite;
+    opacity:.4;
+}
+
+@keyframes float{
+    from{
+        transform:translateY(110vh);
+    }
+    to{
+        transform:translateY(-120px);
+    }
+}
+
+/* Welcome screen */
+
+#welcome{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+}
+
+.hero-card{
+    width:100%;
+    max-width:420px;
+    text-align:center;
+    background:var(--glass);
+    backdrop-filter:blur(12px);
+    border-radius:32px;
+    padding:28px;
+    box-shadow:0 20px 40px rgba(0,0,0,.12);
+}
+
+.dog-container{
+    margin-bottom:20px;
+}
+
+.dog{
+    font-size:120px;
+    animation:bounce 3s infinite;
+}
+
+@keyframes bounce{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-12px);}
+}
+
+.hero-title{
+    font-size:2rem;
+    color:#d63384;
+    margin-bottom:12px;
+}
+
+.hero-sub{
+    margin-bottom:22px;
+    line-height:1.5;
+}
+
+.start-btn{
+    border:none;
+    padding:18px 28px;
+    border-radius:999px;
+    background:linear-gradient(135deg,#ff69b4,#ff8fc7);
+    color:white;
+    font-size:1.15rem;
+    font-weight:700;
+    cursor:pointer;
+    box-shadow:0 8px 20px rgba(255,105,180,.4);
+}
+
+/* Main plan */
+
+#plan{
+    display:none;
+    max-width:760px;
+    margin:auto;
+    padding:24px 18px 60px;
+}
+
+.header{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.header h1{
+    color:#d63384;
+    margin-bottom:10px;
+}
+
+.progress{
+    background:white;
+    border-radius:999px;
+    overflow:hidden;
+    height:18px;
+    margin-top:14px;
+}
+
+.progress-fill{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,#ff69b4,#ff8fc7);
+    transition:.4s;
+}
+
+.activity{
+    margin-bottom:14px;
+}
+
+.activity-btn{
+    width:100%;
+    border:none;
+    background:rgba(255,255,255,.8);
+    backdrop-filter:blur(10px);
+    padding:18px;
+    border-radius:22px;
+    text-align:left;
+    cursor:pointer;
+    font-size:1rem;
+    font-weight:700;
+    color:var(--text);
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+.details{
+    display:none;
+    background:white;
+    margin-top:8px;
+    padding:16px;
+    border-radius:18px;
+    line-height:1.7;
+}
+
+.mascot{
+    position:fixed;
+    right:10px;
+    bottom:10px;
+    font-size:60px;
+    animation:bounce 3s infinite;
+}
+
+.confetti{
+    position:fixed;
+    top:-20px;
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    animation:fall 4s linear forwards;
+}
+
+@keyframes fall{
+    to{
+        transform:translateY(110vh) rotate(720deg);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="hearts" id="hearts"></div>
+
+<section id="welcome">
+    <div class="hero-card">
+
+        <!-- Replace the dog-container section with this -->
+
+<div class="dog-container">
+    <img
+        src="https://pet-health-content-media.chewy.com/wp-content/uploads/2024/09/11163236/202107NorwichTerrier-FeaturedImage.jpg"
+        alt="Norwich Terrier"
+        style="
+            width:100%;
+            max-width:320px;
+            border-radius:24px;
+            box-shadow:0 12px 30px rgba(0,0,0,.15);
+        "
+    >
+</div>
+
+<h1 class="hero-title">🎀 Big Booby Kate’s Birthday! 🎀</h1>
+
+<p class="hero-sub">
+    Пипуля, поздравляю тебя с днем рождения! Норвичи тоже! Эта страничка — наш план на день! Открывай каждый пункт по мере приближения к нему!
+</p>
+
+<button class="start-btn" onclick="startAdventure()">
+    🐾 Кликай, Пуся!
+</button>
+
+    </div>
+</section>
+
+<section id="plan">
+
+<!-- Replace the activities section with this -->
+
+<div class="header">
+    <h1>🎂 Big Booty Kate’s plan for the Day! 🎂</h1>
+    <p>Нажимай на пункты плана, чтобы узнать подробности ✨</p>
+
+    <div class="progress">
+        <div class="progress-fill" id="progress"></div>
+    </div>
+</div>
+
+<div class="activity">
+    <button class="activity-btn" onclick="toggleActivity(0,'a1')">
+        ☕ Пункт 1 • Утро дома
+    </button>
+    <div class="details" id="a1">
+        Отдыхаем в кроватке, читаем, пьём кофе и неспешно собираемся.
+    </div>
+</div>
+
+<div class="activity">
+    <button class="activity-btn" onclick="toggleActivity(1,'a2')">
+        🎨 Пункт 2 • Утро не дома
+    </button>
+    <div class="details" id="a2">
+        Завтрак, подарочек, фоточки и красивая природа.
+    </div>
+</div>
+
+<div class="activity">
+    <button class="activity-btn" onclick="toggleActivity(2,'a3')">
+        🦜 Пункт 3 • Охота на попугаев
+    </button>
+    <div class="details" id="a3">
+        Едем на Уктус, смотрим попугаев и кормим птичек.
+    </div>
+</div>
+
+<div class="activity">
+    <button class="activity-btn" onclick="toggleActivity(3,'a4')">
+        🏡 Пункт 4 • Обратно домой
+    </button>
+    <div class="details" id="a4">
+        Обедаем и собираемся в театр оперы и балета.
+    </div>
+</div>
+
+<div class="activity">
+    <button class="activity-btn" onclick="toggleActivity(4,'a5')">
+        🎭 Пункт 5 • Театр
+    </button>
+    <div class="details" id="a5">
+        Смотрим балет «Корсар».
+    </div>
+</div>
+
+<div class="activity">
+    <button class="activity-btn" onclick="toggleActivity(5,'a6')">
+        💕 Пункт 6 • Гуляем и ужинаем
+    </button>
+    <div class="details" id="a6">
+        Прогулка, фоточки, поцелуи и праздничный ужин.
+    </div>
+</div>
+
+</section>
+
+<div class="mascot">🐕</div>
+
+<script>
+
+const completed = new Set();
+
+function startAdventure(){
+    document.getElementById("welcome").style.display="none";
+    document.getElementById("plan").style.display="block";
+    launchConfetti();
+}
+
+function toggleActivity(index,id){
+
+    const box=document.getElementById(id);
+
+    if(box.style.display==="block"){
+        box.style.display="none";
+    }else{
+        box.style.display="block";
+        completed.add(index);
+    }
+
+    document.getElementById("progress").style.width =
+        (completed.size/5*100)+"%";
+}
+
+function launchConfetti(){
+
+    for(let i=0;i<80;i++){
+
+        const c=document.createElement("div");
+        c.className="confetti";
+
+        c.style.left=Math.random()*100+"vw";
+        c.style.animationDelay=Math.random()*2+"s";
+
+        const colors=[
+            "#ff69b4",
+            "#ffb6d9",
+            "#ffd700",
+            "#ffffff",
+            "#ff8fc7"
+        ];
+
+        c.style.background=
+            colors[Math.floor(Math.random()*colors.length)];
+
+        document.body.appendChild(c);
+
+        setTimeout(()=>c.remove(),5000);
+    }
+}
+
+const hearts=document.getElementById("hearts");
+
+for(let i=0;i<20;i++){
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML=Math.random()>0.5?"💖":"🐾";
+    h.style.left=Math.random()*100+"vw";
+    h.style.animationDuration=(8+Math.random()*8)+"s";
+    hearts.appendChild(h);
+}
+</script>
+
+</body>
+</html>
